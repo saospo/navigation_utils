@@ -1,0 +1,174 @@
+{
+  "navigation_function_tests": [
+    {
+      "name": "SF to Hawaii - full derivation",
+      "description": "No azimuth/distance supplied; function must derive both.",
+      "lat1": 37.827555555555556, "lon1": -122.49958333333333,
+      "lat2": 19.84872222222222, "lon2": -155.41830555555555,
+      "azimuth": null, "distance": null,
+      "known_good_azimuth": 247.08826301371886,
+      "known_good_distance_nm": 2022.419144613307,
+      "source": "confirmed in session, points_test full pass"
+    },
+    {
+      "name": "SF to San Jose - full derivation",
+      "description": "No azimuth/distance supplied; function must derive both.",
+      "lat1": 37.827555555555556, "lon1": -122.49958333333333,
+      "lat2": 37.53841666666666, "lon2": -121.51202777777777,
+      "azimuth": null, "distance": null,
+      "known_good_azimuth": 109.99975749636198,
+      "known_good_distance_nm": 49.99921294265174,
+      "source": "confirmed in session, points_test full pass"
+    },
+    {
+      "name": "50nm hop at heading 250 from point1 (lands ~San Jose)",
+      "description": "Explicit azimuth+distance. dlon for this case is well under 90 degrees, so predates and is unaffected by the dlon/atan2 fix.",
+      "lat1": 37.827555555555556, "lon1": -122.49958333333333,
+      "lat2": 37.53840874924398, "lon2": -121.51201385819598,
+      "azimuth": 250, "distance": 50,
+      "source": "confirmed in session, points_test full pass"
+    },
+    {
+      "name": "Due north sanity check",
+      "description": "Simple hand-verifiable case: azimuth 0 means lat2 = lat1 + distance/60, lon2 == lon1 exactly.",
+      "lat1": 45, "lon1": 56,
+      "lat2": 46.66666666666666, "lon2": 56.0,
+      "azimuth": 0, "distance": 100,
+      "source": "confirmed in session, points_test full pass"
+    },
+    {
+      "name": "Equator, due east - full derivation",
+      "description": "On the equator, due-east travel keeps lat2 = 0 and moves lon2 by exactly the central angle.",
+      "lat1": 0, "lon1": 0,
+      "lat2": 0, "lon2": 1,
+      "azimuth": null, "distance": null,
+      "known_good_azimuth": 90.0,
+      "known_good_distance_nm": 59.99999999999401,
+      "source": "confirmed in session, points_test full pass"
+    },
+    {
+      "name": "Equator, due east - explicit azimuth/distance",
+      "description": "Same points as above, but azimuth/distance supplied directly rather than derived.",
+      "lat1": 0, "lon1": 0,
+      "lat2": 0, "lon2": 1,
+      "azimuth": 90, "distance": 60,
+      "source": "confirmed in session, points_test full pass"
+    },
+    {
+      "name": "Meridian, due north - full derivation",
+      "description": "Degenerate meridian case (constant longitude). Exercises the M=0/180 degenerate branch proven out analytically earlier in the session.",
+      "lat1": 45, "lon1": 0,
+      "lat2": 60, "lon2": 0,
+      "azimuth": null, "distance": null,
+      "known_good_azimuth": 0.0,
+      "known_good_distance_nm": 900.0000000000013,
+      "source": "confirmed in session, points_test full pass"
+    },
+    {
+      "name": "Antimeridian crossing - full derivation",
+      "description": "Tests longitude wraparound/normalization near +/-180. Exercises normalize_longitude.",
+      "lat1": 0, "lon1": 179,
+      "lat2": 0, "lon2": -179,
+      "azimuth": null, "distance": null,
+      "known_good_azimuth": 90.0,
+      "known_good_distance_nm": 119.99999999999683,
+      "source": "confirmed in session, points_test full pass"
+    },
+    {
+      "name": "Pole-adjacent - full derivation",
+      "description": "Tests numerical stability near the pole (cos(lat) in denominator terms gets small). 89N to 89N, 90 degrees of longitude apart.",
+      "lat1": 89, "lon1": 0,
+      "lat2": 89, "lon2": 90,
+      "azimuth": null, "distance": null,
+      "known_good_azimuth": 45.00436354466653,
+      "known_good_distance_nm": 84.85065965711688,
+      "source": "confirmed in session, points_test full pass"
+    }
+  ],
+  "dms_parser_tests": [
+    {"input": "5°39'58.5\"W", "expected_decimal_degrees": -5.66625},
+    {"input": "0°12'45.3\"N", "expected_decimal_degrees": 0.2125833333},
+    {"input": "8°0'0\"E", "expected_decimal_degrees": 8.0},
+    {"input": "122°29'58.5\"W", "expected_decimal_degrees": -122.4995833333},
+    {"input": "179°59'59.9\"E", "expected_decimal_degrees": 179.9999722222},
+    {"input": "100°0'30\"S", "expected_decimal_degrees": -100.0083333333},
+    {"input": "45°0'12.7\"N", "expected_decimal_degrees": 45.0035277778},
+    {"input": "73°0'0\"W", "expected_decimal_degrees": -73.0},
+    {"input": "0°45'30.2\"E", "expected_decimal_degrees": 0.7583888889},
+    {"input": "0°0'15\"S", "expected_decimal_degrees": -0.0041666667},
+    {"input": "34°15'N", "expected_decimal_degrees": 34.25},
+    {"input": "0°30'W", "expected_decimal_degrees": -0.5},
+    {"input": "122°0'E", "expected_decimal_degrees": 122.0},
+    {"input": "45°N", "expected_decimal_degrees": 45.0},
+    {"input": "0°E", "expected_decimal_degrees": 0.0},
+    {"input": "122°W", "expected_decimal_degrees": -122.0},
+    {"input": "122°0'0\"W", "expected_decimal_degrees": -122.0},
+    {"input": "58°12'3.14159\"N", "expected_decimal_degrees": 58.2008726639},
+    {"input": "0°0'0\"N", "expected_decimal_degrees": 0.0},
+    {"input": "0°0'0\"E", "expected_decimal_degrees": 0.0}
+  ],
+  "atan2_or_acos_for_lat2_from_point1_lon2_azimuth": [
+    {
+      "lat1": 33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 253.46,
+      "note": "east_west_3_isolation: original east_west_3 failure case (atan2 known to fail here)"
+    },
+    {
+      "lat1": 33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 200.0,
+      "note": "east_west_3_isolation: vary azimuth at fixed mid-lat and small gap - different oblique azimuth"
+    },
+    {
+      "lat1": 33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 100.0,
+      "note": "east_west_3_isolation: vary azimuth at fixed mid-lat and small gap - near due-east"
+    },
+    {
+      "lat1": 33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 45.0,
+      "note": "east_west_3_isolation: vary azimuth at fixed mid-lat and small gap - near 45 degrees"
+    },
+    {
+      "lat1": 5.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 253.46,
+      "note": "east_west_3_isolation: vary latitude at fixed azimuth and gap - low latitude"
+    },
+    {
+      "lat1": 60.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 253.46,
+      "note": "east_west_3_isolation: vary latitude at fixed azimuth and gap - high-ish latitude"
+    },
+    {
+      "lat1": -33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 253.46,
+      "note": "east_west_3_isolation: vary latitude at fixed azimuth and gap - southern hemisphere mirror"
+    },
+    {
+      "lat1": 33.0, "lon1": 118.2, "lon2": 118.19, "azimuth": 253.46,
+      "note": "east_west_3_isolation: vary longitude gap size at fixed lat and azimuth - even smaller gap (0.01deg)"
+    },
+    {
+      "lat1": 33.0, "lon1": 118.2, "lon2": 117.5, "azimuth": 253.46,
+      "note": "east_west_3_isolation: vary longitude gap size at fixed lat and azimuth - moderate gap (0.7deg)"
+    },
+    {
+      "lat1": 33.0, "lon1": 118.2, "lon2": 115.0, "azimuth": 253.46,
+      "note": "east_west_3_isolation: vary longitude gap size at fixed lat and azimuth - large gap (3.2deg)"
+    },
+    {
+      "lat1": 33.0, "lon1": 118.2, "lon2": 130.0, "azimuth": 253.46,
+      "note": "east_west_3_isolation: control case - large gap, no small terms present"
+    },
+    {
+      "lat1": -10.0, "lon1": 50.0, "lon2": 65.0, "azimuth": 137.0,
+      "note": "east_west_3_isolation: control case - unrelated oblique geometry, no small terms present"
+    }
+  ],
+  "oblique_test_suite_testing_nav_functions_small_scale": [
+      {"lat1": 33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 253.46, "note": "original east_west_3 failure"},
+      {"lat1": 33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 200.0, "note": "different oblique azimuth, same small gap"},
+      {"lat1": 33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 100.0, "note": "azimuth near due-east, same small gap"},
+      {"lat1": 33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 45.0, "note": "azimuth near 45deg, same small gap"},
+      {"lat1": 5.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 253.46, "note": "low latitude, same azimuth/gap"},
+      {"lat1": 60.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 253.46, "note": "high-ish latitude, same azimuth/gap"},
+      {"lat1": -33.0, "lon1": 118.2, "lon2": 118.0, "azimuth": 253.46, "note": "southern hemisphere mirror"},
+      {"lat1": 33.0, "lon1": 118.2, "lon2": 118.19, "azimuth": 253.46, "note": "even smaller gap (0.01deg)"},
+      {"lat1": 33.0, "lon1": 118.2, "lon2": 117.5, "azimuth": 253.46, "note": "moderate gap (0.7deg)"},
+      {"lat1": 33.0, "lon1": 118.2, "lon2": 115.0, "azimuth": 253.46, "note": "large gap (3.2deg)"},
+      {"lat1": 33.0, "lon1": 118.2, "lon2": 130.0, "azimuth": 253.46, "note": "large gap, control case"},
+      {"lat1": -10.0, "lon1": 50.0, "lon2": 65.0, "azimuth": 137.0, "note": "unrelated oblique control case"},
+  ]
+}
