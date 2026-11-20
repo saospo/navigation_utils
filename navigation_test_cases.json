@@ -169,6 +169,6 @@
       {"lat1": 33.0, "lon1": 118.2, "lon2": 117.5, "azimuth": 253.46, "note": "moderate gap (0.7deg)"},
       {"lat1": 33.0, "lon1": 118.2, "lon2": 115.0, "azimuth": 253.46, "note": "large gap (3.2deg)"},
       {"lat1": 33.0, "lon1": 118.2, "lon2": 130.0, "azimuth": 253.46, "note": "large gap, control case"},
-      {"lat1": -10.0, "lon1": 50.0, "lon2": 65.0, "azimuth": 137.0, "note": "unrelated oblique control case"},
+      {"lat1": -10.0, "lon1": 50.0, "lon2": 65.0, "azimuth": 137.0, "note": "unrelated oblique control case"}
   ]
 }
