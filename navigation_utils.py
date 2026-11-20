@@ -113,9 +113,9 @@ def decimal_degree_string_parser(decimal_degree_string: str) -> float:
     degrees = float(match.group("degrees"))
 
     output_sign_multiplier = 1
-    if degrees_sign is not None and degrees_sign != "" and direction == "":
+    if degrees_sign is not None and degrees_sign != "" and direction is None:
         output_sign_multiplier = -1 if degrees_sign == "-" else 1
-    if direction != "":
+    if direction is not None:
         output_sign_multiplier = -1 if direction == "S" or direction == "W" else 1
 
     return degrees * output_sign_multiplier
