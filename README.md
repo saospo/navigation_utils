@@ -12,6 +12,14 @@ Various functionality enclosed. Major groupings:
 
 Also included are a variety of test suites yours truly used when writing this library.
 
+Purpose:
+
+This is the math layer for a project using publicly available Copernicus satellite data for an app. There is another library, 
+called copernicus_utils, which rests on top of navigation_utils and uses its functions for navigation over raster data. 
+The accuracy target in copernicus_utils is 0.3 arcseconds. Handler functions in copernicus_utils are responsible for selecting
+which functions from navigation_utils should be used, hence the various acos and atan2 variations on similar functionality
+in navigation_utils. Degenerate inputs from navigation_utils are handled by caller functions: sanitization happens upstream. 
+
 Sources:
 
 I primarily used the following two pages. I developed my intuition by grinding against that Stonybrook page for a day. Some of the more advanced identities (Clairaut's, vector-based circle identification) come from Aviation Formulary. It's a great resource.
@@ -23,6 +31,16 @@ I have also used these for reference.
 
 Wikipedia on spherical trig: https://en.wikipedia.org/wiki/Spherical_trigonometry
 Wikipedia on great circles: https://en.wikipedia.org/wiki/Great-circle_navigation
+
+AI Usage Note:
+
+I used AI as a design consultant. I handwrote all code, but let Claude review functions for basic logic errors and control
+flow before manually addressing concerns. I hand-derived proofs for most functions, or derived them from source webpages. 
+Claude was used to help identify problem sets and source pages to use for teaching myself spherical trigonometry, such as
+the Stonybrook page. I didn't copy code blindly, and added nothing I couldn't understand independently myself. Claude designed
+the test suites according to my specifications, though I changed and refactored some of the architecture. The actual test
+functions (and the code which calls them) was written by me.
+
 
 Dependencies:
 math
