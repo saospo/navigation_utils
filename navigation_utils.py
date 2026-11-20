@@ -72,12 +72,12 @@ def dms_string_parser(dms_string: str) -> DMS:
     # depending on the number of groups in our input, search for degrees, minutes, seconds
     pattern = r"(?P<degrees_sign>-?)(?P<degrees>[0-9]{1,3})"
     if groups_count >= 2:
-        pattern += r"[^0-9]+?(?P<minutes>[0-9]{1,3})"
+        pattern += r"[^0-9]*?(?P<minutes>[0-9]{1,3})"
     if groups_count >= 3:
-        pattern += r"[^0-9]+?(?P<seconds>[0-9]{1,3}(?:\.[0-9]+)?)"
+        pattern += r"[^0-9]*?(?P<seconds>[0-9]{1,3}(?:\.[0-9]+)?)"
     if groups_count >= 4:
         raise ValueError(f"too many numeric components in input: {dms_string}")
-    pattern += r"[^0-9]+?(?P<direction>[NSEW])?$"
+    pattern += r"[^NSEW0-9]*?(?P<direction>[NSEW])?.?$"
 
     match = re.search(pattern, dms_string)
 
